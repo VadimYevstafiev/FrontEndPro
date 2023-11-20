@@ -1,18 +1,14 @@
-const x1 = prompt('Write any number');
-const x2 = prompt('Write any other number');
-const x3 = prompt('Write any any other number');
-alert(`${x1} ${x2} ${x3}`);
-
-let x = 54678;
-let str = '';
-let rest;
+const x1 = Number(prompt('Write any number'));
+const x2 = Number(prompt('Write any other number'));
 
 
+const y1 = x1 + x2;
+const y2 = x1 - x2;
+const y3 = x1 * x2;
+const y4 = x1 / x2;
 
-while (x > 0) {
-    rest = x % 10;
-    str = rest + ' ' + str;
-    x = (x - rest) / 10;
-}
+alert(`${x1} + ${x2} = ${y1}\n\n
+    ${x1} - ${x2} = ${y2}\n\n
+    ${x1} * ${x2} = ${y3}\n\n
+    ${x1} / ${x2} = ${y4}\n\n`);
 
-alert(str);
