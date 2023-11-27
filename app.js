@@ -1,24 +1,5 @@
-const operand = String(prompt('What do you want?'));
-const x1 = Number(prompt('Enter first number'));
-const x2 = Number(prompt('Enter second number'));
+const hours = Number(prompt('Enter number of hours'));
 
-let y;
+const seconds = hours * 3600;
 
-switch (operand) {
-    case 'add':
-        y = x1 + x2;
-        alert(`${x1} + ${x2} = ${y}\n\n`);
-        break;
-    case 'sub':
-        y = x1 - x2;
-        alert(`${x1} - ${x2} = ${y}\n\n`);
-        break;
-    case 'mult':
-        y = x1 * x2;
-        alert(`${x1} * ${x2} = ${y}\n\n`);
-        break;
-    case 'div':
-        y = x1 / x2;
-        alert(`${x1} / ${x2} = ${y}\n\n`);
-        break;
-}
+alert(`${hours} hours contains ${seconds} seconds\n\n`);
