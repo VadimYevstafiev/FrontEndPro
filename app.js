@@ -1,9 +1,17 @@
-const x1 = Number(prompt('Enter first number'));
-const x2 = Number(prompt('Enter second number'));
-const x3 = Number(prompt('Enter third number'));
+let numOrStr = prompt('input number or string');
+console.log(numOrStr)
 
-const count = 3;
-
-const result = (x1 + x2 + x3) /count;
-
-alert(`* The arithmetic mean is equal to ${result} \n\n `);
+switch (true) {
+    case numOrStr === null:
+        console.log('ви скасували')     
+        break;
+    case numOrStr.trim() === '':
+        console.log('Empty String')     
+        break;
+    case isNaN( +numOrStr ):
+        console.log(' number is Ba_NaN')     
+        break;
+    default:
+        console.log('OK!')
+        break;
+}
