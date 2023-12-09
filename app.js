@@ -1,11 +1,12 @@
-function removeElement(array, item) {
-    return array.filter(function (value) {
-        return value !== item;
-    });
+function generateKey(length, string) {
+    let output = '';
+    for (let i = 0; i < length; i++) {
+        output += string[Math.floor(Math.random() * string.length)];        
+    }
+    return output;
 }
 
-const array = [1, 2, 3, 4, 5, 6, 7];
-const newArray = removeElement(array, 5);
-console.log(array);
-console.log(newArray);
-// Результат: [1, 2, 3, 4, 6, 7]
+const characters = 'abcdefghijklmnopqrstuvwxyz0123456789';
+
+const key = generateKey(16, characters);
+console.log(key); // eg599gb60q926j8i
