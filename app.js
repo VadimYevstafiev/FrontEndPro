@@ -1,98 +1,76 @@
-const array = [16,-37,54,-4,72,-56,47,4, -16,25,-37,46,4,-51,27,-63,4,-54,76,-4,12,-35,4,47];
-console.log(array);
+let users = [
+    {
+        "index": 0,
+        "isActive": true,
+        "balance": "$2,226.60",
+        "name": "Eugenia Sawyer",
+        "gender": "female",
+        "phone": "+1 (840) 583-3207",
+        "address": "949 John Street, Rose, Puerto Rico, 1857"
+    },
+    {
+        "index": 1,
+        "isActive": true,
+        "balance": "$2,613.77",
+        "name": "Pauline Gallegos",
+        "gender": "female",
+        "phone": "+1 (985) 593-3328",
+        "address": "328 Greenpoint Avenue, Torboy, North Dakota, 6857"
+    },
+    {
+        "index": 2,
+        "isActive": false,
+        "balance": "$3,976.41",
+        "name": "Middleton Chaney",
+        "gender": "male",
+        "phone": "+1 (995) 591-2478",
+        "address": "807 Fleet Walk, Brutus, Arkansas, 9783"
+    },
+    {
+        "index": 3,
+        "isActive": true,
+        "balance": "$1,934.58",
+        "name": "Burns Poole",
+        "gender": "male",
+        "phone": "+1 (885) 559-3422",
+        "address": "730 Seba Avenue, Osage, Alabama, 6290"
+    },
+    {
+        "index": 4,
+        "isActive": true,
+        "balance": "$3,261.65",
+        "name": "Mcfadden Horne",
+        "gender": "male",
+        "phone": "+1 (942) 565-3988",
+        "address": "120 Scholes Street, Kirk, Michigan, 1018"
+    },
+    {
+        "index": 5,
+        "isActive": false,
+        "balance": "$1,790.56",
+        "name": "Suzette Lewis",
+        "gender": "female",
+        "phone": "+1 (837) 586-3283",
+        "address": "314 Dunne Place, Bawcomville, Guam, 9053"
+    }
+]
 
-console.log('#1');
-let positiveCount = 0;
-let positiveSum = 0;
-for (let i = 0; i < array.length; i++) {
-    if (array[i] >= 0) {
-        positiveCount++;
-        positiveSum += array[i];
-    }    
-}
-console.log(`positiveCount = ${positiveCount}`);
-console.log(`positiveSum = ${positiveSum}`);
+const updatedUsers = users.map(function (user) {
+    balance = user.balance;
+    return {...user, numBalance:Number(balance.slice(1).replaceAll(',', ''))};
+    
+});
 
-console.log('#2');
-let minNumber = 0;
-let minValue = array[0];
-for (let i = 1; i < array.length; i++) {
-    if (array[i] < minValue) {
-        minNumber = i;
-        minValue = array[i];
-    }    
-}
-console.log(`minNumber = ${minNumber}`);
-console.log(`minValue = ${minValue}`);
+const richUsers = updatedUsers.filter(function (user) {
+    return user.numBalance > 2000
+});
 
-console.log('#3');
-let maxNumber = 0;
-let maxValue = array[0];
-for (let i = 1; i < array.length; i++) {
-    if (array[i] > maxValue) {
-        maxNumber = i;
-        maxValue = array[i];
-    }    
-}
-console.log(`maxNumber = ${maxNumber}`);
-console.log(`maxValue = ${maxValue}`);
+const richUserPhones = richUsers.map(function (user) {
+        return user.phone;
+});
+console.log(richUserPhones);
 
-console.log('#4');
-let negativeCount = 0;
-for (let i = 0; i < array.length; i++) {
-    if (array[i] < 0) {
-        negativeCount++;
-    }    
-}
-console.log(`negativeCount = ${negativeCount}`);
-
-console.log('#5');
-let oddPositiveCount = 0;
-for (let i = 0; i < array.length; i++) {
-    if (array[i] >= 0 && array[i] % 2 !== 0) {
-        oddPositiveCount++;
-    }    
-}
-console.log(`oddPositiveCount = ${oddPositiveCount}`);
-
-console.log('#6');
-let evenPositiveCount = 0;
-for (let i = 0; i < array.length; i++) {
-    if (array[i] >= 0 && array[i] % 2 === 0) {
-        evenPositiveCount++;
-    }    
-}
-console.log(`evenPositiveCount = ${evenPositiveCount}`);
-
-console.log('#7');
-let evenPositiveSum = 0;
-for (let i = 0; i < array.length; i++) {
-    if (array[i] >= 0 && array[i] % 2 === 0) {
-        evenPositiveSum  += array[i];
-    }    
-}
-console.log(`evenPositiveSum = ${evenPositiveSum}`);
-
-console.log('#8');
-let oddPositiveSum = 0;
-for (let i = 0; i < array.length; i++) {
-    if (array[i] >= 0 && array[i] % 2 !== 0) {
-        oddPositiveSum  += array[i];
-    }    
-}
-console.log(`oddPositiveSum = ${oddPositiveSum}`);
-
-console.log('#9');
-let positiveProduct = 1;
-for (let i = 0; i < array.length; i++) {
-    if (array[i] >= 0) {
-        positiveProduct *= array[i];
-    }    
-}
-console.log(`positiveProduct = ${positiveProduct}`);
-
-console.log('#10');
-for (let i = 0; i < array.length; i++) {
-    if (i !== maxNumber) delete array[i];
-}
-console.log(array);
+const sum = richUsers.reduce(function (sum, user) {
+    return Math.round((sum + user.numBalance) * 100) / 100;
+}, 0);
+console.log(sum);
