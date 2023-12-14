@@ -1,11 +1,17 @@
-function getSum(term) {
-    let sum = 0;
-
-    return function (term) {
-        sum += term;
-        return sum;
+let ladder = {
+    step: 0,
+    up: function () {
+        this.step++;
+        return this;
+    },
+    down: function () {
+        this.step--;
+        return this;
+    },
+    showStep: function () { // показывает текущую ступеньку
+        alert(this.step);
     }
-}
+};
 
-const sum = getSum();
+ladder.up().up().down().up().showStep();
 
