@@ -9,7 +9,11 @@ class Appartment {
     people = [];
 
     addHuman(human) {
-        this.people.push(human);
+        if (human instanceof Human) {
+            this.people.push(human);
+        } else {
+            console.log('It is not Human!');
+        }
     }
 }
 
@@ -25,7 +29,11 @@ class Building {
             console.log('Building overflow!');
             return;
         }
-        this.appartments.push(appartment);
+        if (appartment instanceof Appartment) {
+            this.appartments.push(appartment);
+        } else {
+            console.log('It is not Appartment!');
+        }
     }
 }
 
@@ -46,6 +54,7 @@ let numberThree = new Appartment();
 numberThree.addHuman(Kolya);
 
 let numberFour = new Appartment();
+numberFour.addHuman({name: 'Gogi'});
 
 let numberFive = new Appartment();
 numberFive.addHuman(Archibald);
