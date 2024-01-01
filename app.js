@@ -1,41 +1,40 @@
-function Student(name, surname, birthyear) {
-    this.name = name;
-    this.surname = surname;
-    this.birthyear = birthyear;
+class Student {
+    constructor(name, surname, birthyear) {
+        this.name = name;
+        this.surname = surname;
+        this.birthyear = birthyear;
+    
+        this.count = 25;
+        this.attendance = new Array(this.count);
+        this.grades = new Array();
+    }
 
-    this.count = 25;
-    this.attendance = new Array(this.count);
-    this.grades = new Array();
-
-    Object.defineProperty(this, 'attendance', {configurable: false});
-    Object.defineProperty(this, 'attendance', {writable: false});
-
-    this.age = function() {
+    age() {
         return `${this.surname}'s age is ${(new Date()).getFullYear() - this.birthyear} year`;
     }
 
-    this.present = function() {
+    present() {
         this.fillAttendance(true);
     }
 
-    this.absent = function() {
+    absent() {
         this.fillAttendance(false);
     }
     
-    this.grade = function(gradeValue) {
+    grade(gradeValue) {
         if ((typeof gradeValue) === 'number' && gradeValue > 0 && gradeValue <= 100) {
             this.grades.push(gradeValue);
         }
     }
 
-    this.avarageGrade = function() {
+    avarageGrade() {
         const sum = this.grades.reduce(function (sum, item) {
             return sum + item;
         }, 0);
         return Math.round((sum / this.grades.length) * 100 ) / 100;
     }
 
-    this.avarageAttendance = function() {
+    avarageAttendance() {
         const sum = this.attendance.reduce(function (sum, item) {
             return (item) ? ++sum : sum;
         }, 0);
@@ -43,7 +42,7 @@ function Student(name, surname, birthyear) {
         return Math.round((sum / this.attendance.length) * 100 ) / 100;
     } 
 
-    this.summary = function () {
+    summary() {
         switch (true) {
             case (this.avarageGrade() > 90 && this.avarageAttendance() > 0.9):
                 return 'Cool!!!';
@@ -55,7 +54,7 @@ function Student(name, surname, birthyear) {
         }
     }
 
-    this.fillAttendance = function(value) {
+    fillAttendance(value) {
         let i = 0;
         let condition = true;
         do {
@@ -70,7 +69,6 @@ function Student(name, surname, birthyear) {
 
     }
 }
-
 
 const Ivanov = new Student('Ivan', 'Ivanov', 2000);
 console.log(Ivanov.age());
@@ -120,3 +118,77 @@ Sidorov.grade(98);
 console.log(Sidorov.avarageGrade());
 console.log(Sidorov.avarageAttendance());
 console.log(Sidorov.summary());
+
+// function Student(name, surname, birthyear) {
+    //     this.name = name;
+    //     this.surname = surname;
+    //     this.birthyear = birthyear;
+    
+    //     this.count = 25;
+    //     this.attendance = new Array(this.count);
+    //     this.grades = new Array();
+    
+    //     Object.defineProperty(this, 'attendance', {configurable: false});
+    //     Object.defineProperty(this, 'attendance', {writable: false});
+    
+    //     this.age = function() {
+    //         return `${this.surname}'s age is ${(new Date()).getFullYear() - this.birthyear} year`;
+    //     }
+    
+    //     this.present = function() {
+    //         this.fillAttendance(true);
+    //     }
+    
+    //     this.absent = function() {
+    //         this.fillAttendance(false);
+    //     }
+        
+    //     this.grade = function(gradeValue) {
+    //         if ((typeof gradeValue) === 'number' && gradeValue > 0 && gradeValue <= 100) {
+    //             this.grades.push(gradeValue);
+    //         }
+    //     }
+    
+    //     this.avarageGrade = function() {
+    //         const sum = this.grades.reduce(function (sum, item) {
+    //             return sum + item;
+    //         }, 0);
+    //         return Math.round((sum / this.grades.length) * 100 ) / 100;
+    //     }
+    
+    //     this.avarageAttendance = function() {
+    //         const sum = this.attendance.reduce(function (sum, item) {
+    //             return (item) ? ++sum : sum;
+    //         }, 0);
+    //         console.log(sum);
+    //         return Math.round((sum / this.attendance.length) * 100 ) / 100;
+    //     } 
+    
+    //     this.summary = function () {
+    //         switch (true) {
+    //             case (this.avarageGrade() > 90 && this.avarageAttendance() > 0.9):
+    //                 return 'Cool!!!';
+    //             case (this.avarageGrade() > 90 || this.avarageAttendance() > 0.9):
+    //                 return 'Good, but it can be better';
+    //             default:
+    //                 return 'Miserable';
+    
+    //         }
+    //     }
+    
+    //     this.fillAttendance = function(value) {
+    //         let i = 0;
+    //         let condition = true;
+    //         do {
+    //             if (String(this.attendance[i]) === 'undefined') {
+    //                 this.attendance[i] = value;
+    //                 condition = false;
+    //             }
+    //             i++;
+    //         } while(condition && i < this.count);
+    
+    //         if (condition) console.log('Attendance is overflow');
+    
+    //     }
+    // }
+   
