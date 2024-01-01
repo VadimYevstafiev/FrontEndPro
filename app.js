@@ -1,69 +1,57 @@
 class Human {
-    constructor(name, gender) {
+    constructor(name, age) {
         this.name = name;
-        this.gender = gender;
+        this.age = age;
+    }
+
+    show() {
+        console.log(`Himan. Name: ${this.name}. Age: ${this.age}.`);
     }
 }
 
-class Appartment {
-    people = [];
+class Car {
+    constructor(mark, model, manufactured, numberplate) {
+        this.mark = mark;
+        this.model = model;
+        this.manufactured = manufactured;
+        this.numberplate = numberplate;
+    }
 
-    addHuman(human) {
-        if (human instanceof Human) {
-            this.people.push(human);
+    setOwner(owner) {
+        if (owner instanceof Human && owner.age > 18) {
+            this.owner = owner;
         } else {
-            console.log('It is not Human!');
+            console.log('It is bad owner');
         }
     }
-}
 
-class Building {
-    appartments = [];
-
-    constructor(maxAppart) {
-        this.maxAppart = maxAppart;
-    }
-
-    addAppartment(appartment) {
-        if (this.appartments.length >= this.maxAppart) {
-            console.log('Building overflow!');
-            return;
-        }
-        if (appartment instanceof Appartment) {
-            this.appartments.push(appartment);
+    show() {
+        console.log(`Car. Mark: ${this.mark}. Model: ${this.model}. Manufactured at: ${this.manufactured}. Numberplate: ${this.numberplate}.`);
+        console.log(`Owner:`);
+        if (typeof this.owner  === 'undefined') {
+            console.log(`nobody`);
         } else {
-            console.log('It is not Appartment!');
+            this.owner.show();           
         }
     }
 }
 
-let Masha = new Human('Masha', 'female');
-let Dasha = new Human('Dasha', 'female');
-let Petya = new Human('Petya', 'male');
-let Kolya = new Human('Kolya', 'male');
-let Archibald = new Human ('Archibald', undefined);
+let Masha = new Human('Masha', 18);
+let Dasha = new Human('Dasha', 22);
+let Petya = new Human('Petya', 44);
+let Kolya = new Human('Kolya', 35);
 
-let numberOne = new Appartment();
-numberOne.addHuman(Masha);
-numberOne.addHuman(Petya);
+let Mersedes = new Car('Mersedes', 'S600', 2014, 'KH 34 56');
+let BMW = new Car('BMW', '340', 2010, 'KN 45 67');
+let Toyota = new Car('Toyota', 'Camry', 2020, 'KN 67 39');
+let ZAZ = new Car('ZAZ', '369', 1968, 'KN 23 56');
 
-let numberTwo = new Appartment();
-numberTwo.addHuman(Dasha);
+Mersedes.setOwner(Masha);
+BMW.setOwner(Dasha);
+Toyota.setOwner(Petya);
+ZAZ.setOwner(Kolya);
 
-let numberThree = new Appartment();
-numberThree.addHuman(Kolya);
-
-let numberFour = new Appartment();
-numberFour.addHuman({name: 'Gogi'});
-
-let numberFive = new Appartment();
-numberFive.addHuman(Archibald);
-
-let house = new Building(4);
-house.addAppartment(numberOne);
-house.addAppartment(numberTwo);
-house.addAppartment(numberThree);
-house.addAppartment(numberFour);
-house.addAppartment(numberFive);
-
-console.log(house);
+Mersedes.show();
+BMW.show();
+Toyota.show();
+ZAZ.show();
