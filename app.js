@@ -1,25 +1,10 @@
-function parseJSON(jsonString) {
-    try {
-        return JSON.parse(jsonString, function(key, value) {
-            if (key == '') return value;
-            const format = (key === 'age')
-                ? 'number'
-                : 'string';
-            if (typeof value !== format) throw new SyntaxError (`Invalid JSON: Unexpected ${typeof value} in JSON at position ${key}`);
-            return value;
-        });
-    } catch (e) {
-        return {
-            error: e.message
-        };
-    }
+var codes = {
+    "+6": "Польща",
+    "+38": "Україна",
+    "+1": "США"
+   };
+for (let key in codes) {
+    let value = codes[key];
+    key = +key;
+    console.log(`${key}: ${value}`);
 }
-
-
-const jsonString1 = '{"name": "John", "age": 30, "city": "New York"}';
-
-const jsonString2 = '{"name": "Alice", "age": "twenty-five", "city": "London"}';
-
-console.log(parseJSON(jsonString1));
-
-console.log(parseJSON(jsonString2));
