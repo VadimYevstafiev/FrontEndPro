@@ -1,34 +1,17 @@
-const reviews = [
-    new Map([
-        ['name', 'Катя'],
-        ['text', 'Катя не катит']
-    ]),
-    new Map([
-        ['name', 'Валя'],
-        ['text', 'Валя не валит']
-    ]),
-    new Map([
-        ['name', 'Света'],
-        ['text', 'Света не светит']
-    ]),
-];
+const table = document.createElement('TABLE');
+let row;
+let cell;
+let counter = 0;
 
-const parent = document.querySelector('#testimonials');
+for (i = 0; i < 10; i++) {
+    row = document.createElement('TR');
+    table.append(row);
+    for (j = 0; j < 10; j++) {
+        cell = document.createElement('TD');
+        cell.innerText = ++counter;
+        row.append(cell);
+    }
+}
 
-const insert = new DocumentFragment();
-
-reviews.map(function (item) {
-    const child = document.createElement('div');
-    
-    const head = document.createElement('h1');
-    head.innerHTML = item.get('name');
-    child.append(head);
-
-    const content = document.createElement('p');
-    content.innerHTML = item.get('text');
-    child.append(content);
-
-    insert.append(child);
-})
-
-parent.append(insert);
+const parent = document.querySelector('#table');
+parent.append(table);
