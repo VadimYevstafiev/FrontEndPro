@@ -9,7 +9,7 @@ btn.addEventListener('click', function () {
     box.innerHTML = '';
     const rndInt = randomIntFromInterval(1, 9);
     const image = document.createElement('img');
-    image.src = `images/${rndInt}.jpg`;
+    image.src = `./images/${rndInt}.jpg`;
     box.append(image);
 
 })
