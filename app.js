@@ -1,17 +1,16 @@
-const table = document.createElement('TABLE');
-let row;
-let cell;
-let counter = 0;
-
-for (i = 0; i < 10; i++) {
-    row = document.createElement('TR');
-    table.append(row);
-    for (j = 0; j < 10; j++) {
-        cell = document.createElement('TD');
-        cell.innerText = ++counter;
-        row.append(cell);
-    }
+function randomIntFromInterval(min, max) { // min and max included 
+    return Math.floor(Math.random() * (max - min + 1) + min)
 }
 
-const parent = document.querySelector('#table');
-parent.append(table);
+
+const btn = document.querySelector("#btn");
+btn.addEventListener('click', function () {
+    const box = document.querySelector('#image');
+    box.innerHTML = '';
+    const rndInt = randomIntFromInterval(1, 9);
+    const image = document.createElement('img');
+    image.src = `images/${rndInt}.jpg`;
+    box.append(image);
+
+})
+
