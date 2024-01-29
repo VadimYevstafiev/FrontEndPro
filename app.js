@@ -1,3 +1,5 @@
+ const count = 5;
+ 
  function createSmileCell(number) {
     const smile = document.createElement('IMG');
     smile.src = `./images/smile_${number}.png`;
@@ -22,13 +24,16 @@
 
  function createRow(filler) {
     const row = document.createElement('TR');
-    for (let i = 0; i < 5; i++) {
+    for (let i = 0; i < count; i++) {
         row.append(filler(i));
     }
     return row;
 }
 
-const rating = [0, 0, 0, 0, 0];
+const rating = [];
+for (let i = 0; i < count; i++) {
+    rating.push(0);
+}
 const table = document.createElement('TABLE');
 table.append(createRow(createSmileCell));
 table.append(createRow(createRateCell));
