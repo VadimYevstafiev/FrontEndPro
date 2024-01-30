@@ -5,29 +5,51 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <style>
-        table, th, td {
-            border: 1px solid black;
+        body {
+            display: grid;
+            grid-template-columns: 40vw 60vw;
+            grid-template-rows: 1fr;
         }
 
-        td {
+        main {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+        }
+
+        .products-list {
+            border: 1px solid black;
+            margin: 10px;
             padding: 10px;
         }
 
-        .smile {
-            width: 80px;
-            height: 80px;
+        .product-item {
+            border: 1px solid black;
+            margin: 10px;
+            padding: 10px;
         }
 
-        .rate {
-            font-size: 20px;
-            text-align: center;
+        nav {
+            border: 1px solid black;
+            margin: 10px;
+            padding: 10px;
         }
     </style>
 </head>
 <body>
-    <div id='table'></div> 
-    <script src="./app.js">
+    <aside>
+        <nav>
+            <ul>
+            </ul>            
+        </nav>
+    </aside>
+    <main>
+        <div class="products-list">
 
-    </script>
+        </div>
+        <div class="product-item">
+
+        </div>
+    </main>
+    <script src="./app.js"></script>
 </body>
 </html>
