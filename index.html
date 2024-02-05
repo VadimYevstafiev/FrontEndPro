@@ -4,19 +4,21 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <link href="./app.css" rel="stylesheet" />
 </head>
 <body>
-    <div class="input-box">
-        <label for="post-id">Enter number of post(1-100):</label>
-        <input type="number" id="post-id" name="post-id" min="1" max="100" />
-        <input type="button" id="enter-post-id" value="Enter" />
-    </div>
-    <div class="post-box">
-
-    </div>
-    <div class="comments-box">
-
-    </div>
+    <article class="widget">
+        <div class="weatherIcon"></div>
+        <div class="weatherData">
+          <h1 class="temperature"></h1>
+          <h2 class="description"></h2>
+          <h3 class="city"></h3>
+        </div>
+        <div class="date">
+          <h4 class="month" id="month"></h4>
+          <h5 class="day" id="day"></h5>
+        </div>
+    </article>
     <script src="./app.js"></script>
 </body>
 </html>

@@ -1,81 +1,41 @@
-function showComments(event) {
-    const button = event.target.closest('button');
-    const postId = button.dataset.postId;
-
-    const getComments = new Promise((resolve) => {
-        const comments = fetch(`https://jsonplaceholder.typicode.com/posts/${postId}/comments`);
-        resolve(comments);
-    });
-
-    getComments.then((data) => {
-        return data.json();
-    })
-    .then((data) => {
-        const box = document.querySelector('.comments-box');
-
-        let itemBox;
-        data.forEach(element => {
-            itemBox = document.createElement('div');
-
-            const title = document.createElement('h2');
-            title.innerText = element.name;
-            itemBox.append(title);
-            
-            const content = document.createElement('p');
-            content.innerText = element.body;
-            itemBox.append(content);
-
-            box.append(itemBox);
-        });
-    })
-    .catch((error) => {
-        alert(error.message);
-    })
-
-}
-
-const postIdButton = document.querySelector('#enter-post-id');
-postIdButton.addEventListener('click', function () {
-    const inputPostId = document.querySelector('#post-id');
-    const postId = inputPostId.value;
-
-    const getPost = new Promise((resolve) => {
-        if (postId < 1 || postId > 100) throw Error('Number of post may be from 1 to 100');
+const d = new Date();
+    document.getElementById("day").innerHTML = d.getDate();
     
-        const postData = fetch(`https://jsonplaceholder.typicode.com/posts/${postId}`);
-        resolve(postData);
-    });
+    const month = new Array();
+    month[0] = "January";
+    month[1] = "February";
+    month[2] = "March";
+    month[3] = "April";
+    month[4] = "May";
+    month[5] = "June";
+    month[6] = "July";
+    month[7] = "August";
+    month[8] = "September";
+    month[9] = "October";
+    month[10] = "November";
+    month[11] = "December";
+    document.getElementById("month").innerHTML = month[d.getMonth()];
 
-    getPost.then((data) => {
-        return data.json();
-    })
-    .then((data) => {
-        document.querySelector('.comments-box').innerHTML = '';
+const city = 'PARIS';
 
-        let button = document.querySelector('#show-comments-button');
-        if (button !== null) {
-            button.removeEventListener('click', showComments);
-        }
+(async function (city) {
+    const url = `http://api.openweathermap.org/data/2.5/weather?q=${city}&units=metric&APPID=5d066958a60d315387d9492393935c19`;
+    let response = await fetch(url);
+    if (response.ok) {
+        let result = await response.json();
+        showWeather(result);
+    } else {
+        console.log(error);
+        alert (`HTTP-error: ${response.status}`);
+    }
+})(city);
 
-        const box = document.querySelector('.post-box');
-        box.innerHTML = '';
-
-        const title = document.createElement('h1');
-        title.innerText = data.title;
-        box.append(title);
-        
-        const content = document.createElement('p');
-        content.innerText = data.body;
-        box.append(content);
-
-        button = document.createElement('button');
-        button.innerText = 'Show comments';
-        button.setAttribute(`data-post-id`, data.id);
-        button.setAttribute(`id`, 'show-comments-button');
-        button.addEventListener('click', showComments);
-        box.append(button);
-    })
-    .catch((error) => {
-        alert(error.message);
-    })
-})
+function showWeather(data) {
+    const icon = document.createElement('img');
+    icon.src = `http://openweathermap.org/img/w/${data.weather[0].icon}.png`;
+    icon.classList.add('icon');
+    document.querySelector('.weatherIcon').append(icon);
+    document.querySelector('.temperature').innerHTML = `${Math.round(data.main.temp)}&deg;`;
+    document.querySelector('.description').innerHTML = `${data.weather[0].main}`;
+    document.querySelector('.city').innerHTML = `${data.name}, ${data.sys.country}`;
+}
