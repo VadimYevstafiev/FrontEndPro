@@ -7,13 +7,18 @@
     <style>
         body {
             display: grid;
-            grid-template-columns: 40vw 60vw;
+            grid-template-columns: 30vw 70vw;
             grid-template-rows: 1fr;
+            margin: 0px;
+        }
+
+        aside {
+            display: grid;
         }
 
         main {
             display: grid;
-            grid-template-columns: 1fr 1fr;
+            grid-template-columns: 30vw 1fr;
         }
 
         .products-list {
@@ -28,27 +33,39 @@
             padding: 10px;
         }
 
+        .orders-list {
+            display: grid;
+            border: 1px solid black;
+            margin: 10px;
+            padding: 10px;
+        }
+
         nav {
             border: 1px solid black;
             margin: 10px;
             padding: 10px;
+        }
+
+        .block {
+            display: inline-block;
+        }
+
+        .button {
+            display: inline-block;
+            float: right;
         }
     </style>
 </head>
 <body>
     <aside>
         <nav>
+            <button id="my-orders">My orders</button>
             <ul>
             </ul>            
         </nav>
     </aside>
     <main>
-        <div class="products-list">
 
-        </div>
-        <div class="product-item">
-
-        </div>
     </main>
     <script src="./app.js"></script>
 </body>

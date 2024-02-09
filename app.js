@@ -116,28 +116,132 @@ function createLi(name,  attribute, id) {
     return li;
 }
 
-function clearProducts() {
+function createProductList(main, category) {
+    const own = products.filter(function (item) {
+        return item.category === category;
+    });
+    
+    let list = document.querySelector('.products-list');
+
+    if (list === null) {
+        list = document.createElement('div');
+        list.classList.add('products-list');
+        main.append(list);
+    } else {
+        list.innerHTML = '';
+
+        let item = document.querySelector('.product-item')
+        if (item !== null) item.remove();
+    }
+
+    const productUl = document.createElement('ul');
+
+    for (let i = 0; i < own.length; i++) {
+        productUl.append(createLi(own[i].name, 'product', own[i].id))
+    }
+    list.append(productUl);
+    productUl.addEventListener('click', productListener);
+}
+
+function createProductItem(product) {
+    const main = document.querySelector('main');
+
+    let item = document.querySelector('.product-item');
+    if (item === null) {
+        item = document.createElement('div');
+        item.classList.add('product-item');
+        main.append(item);
+    } else {
+        item.innerHTML = '';
+    }
+
+    let div;
+
+    div = document.createElement('div');
+    const image = document.createElement('img');
+    image.src = product.image;
+    div.append(image);
+    item.append(div);
+
+    div = document.createElement('div');
+    div.innerText = product.name;
+    item.append(div);
+
+    div = document.createElement('div');
+    div.innerText = product.desc;
+    item.append(div);
+
+    div = document.createElement('div');
+    div.innerText = `Price: ${product.price}`;
+    item.append(div);
+
+    div = document.createElement('div');
+    div.innerText = `Quantity: ${product.quantity}`;
+    item.append(div);
+
+    let button = document.createElement('button');
+    button.innerText = 'Buy';
+    button.setAttribute(`data-product-id`, product.id);
+    item.append(button);
+    button.addEventListener('click', buyProduct);
+}
+
+function clearProductItem() {
     const button = document.querySelector('.product-item button');
     button.removeEventListener('click', buyProduct);
-    document.querySelector('.product-item').innerHTML = '';
+    document.querySelector('.product-item').remove();
+}
 
+function clearProductsList() {
     const productUl = document.querySelector('.products-list ul');
     productUl.removeEventListener('click', productListener);
-    document.querySelector('.products-list').innerHTML = '';
+    document.querySelector('.products-list').remove();
+}
+
+function setDataToLocal(name, value) {
+    localStorage.setItem(name, JSON.stringify(value));
+}
+
+function getDataFromLocal(name) {
+    return JSON.parse(localStorage.getItem(name));
 }
 
 function buyProduct(event) {
+    
     const button = event.target;
-    const name = button.dataset.productName;
+    const id = button.dataset.productId;
+    const now = new Date();
+    const product = [{date: now.toDateString()}, products[id]];
+
+    const isHasLocalOrders = localStorage.getItem('orders');
+
+    if (isHasLocalOrders) {
+        let orders = getDataFromLocal('orders');
+        orders.push(product);
+        setDataToLocal('orders', orders);
+    } else {
+        setDataToLocal('orders', [product]);
+    }
 
     let div = document.createElement('div');
-    div.innerText = `You buy ${name}`;
+    div.innerText = `You buy ${product[1].name}`;
     div.classList.add('product-item');
     document.body.append(div);
     setTimeout(function () {
         div.remove();
-        clearProducts();
+        clearProductItem();
+        clearProductsList()
     }, 2000)
+}
+
+function categoryListener(event) {
+    const li = event.target.closest('li');
+    if (!li) return;
+    if (!ul.contains(li)) return;
+
+    const main = document.querySelector('main');
+    const id = li.dataset.categoryId;
+    createProductList(main, categories[id]);
 }
 
 function productListener(event) {
@@ -147,67 +251,120 @@ function productListener(event) {
     if (!this.contains(li)) return;
 
     const id = li.dataset.productId;
-    const item = document.querySelector('.product-item');
-    item.innerHTML = '';
+    createProductItem(products[id]);
+}
 
+function orderListener(event) {
+    const li = event.target.closest('.block');
+
+    if (!li) return;
+    if (!this.contains(li)) return;
+
+    const id = li.dataset.orderId;
+
+    createProductItem(products[id]);
+}
+
+function removeOrderListener(event) {
+    const li = event.target.closest('.button');
+
+    if (!li) return;
+    if (!this.contains(li)) return;
+
+    const id = parseInt(li.dataset.removeOrderId);
+
+    let orders = getDataFromLocal('orders');
+    let newOrders = orders.filter(function (item) {
+        return item[1].id !== id;
+    })
+
+    setDataToLocal('orders', newOrders);
+
+    const ul = document.querySelector('ul');
+    ul.removeEventListener('click', categoryListener);
+    const aside = document.querySelector('aside');
+    aside.style.display = 'none';
+
+    updateOrdersList();
+    if (document.querySelector('.product-item') !== null) clearProductItem();
+}
+
+function clearAll() {
+    if (document.querySelector('.product-item') !== null) clearProductItem();
+
+    if(document.querySelector('.products-list') !== null) clearProductsList();
+
+    const ul = document.querySelector('ul');
+    ul.removeEventListener('click', categoryListener);
+    const aside = document.querySelector('aside');
+    aside.style.display = 'none';
+}
+
+function createOrdersListItem(order) {
+    let parent = document.createElement('div');
     let div;
 
     div = document.createElement('div');
-    const image = document.createElement('img');
-    image.src = products[id].image;
-    div.append(image);
-      item.append(div);
-
-    div = document.createElement('div');
-    div.innerText = products[id].name;
-    item.append(div);
-
-    div = document.createElement('div');
-    div.innerText = products[id].desc;
-    item.append(div);
-
-    div = document.createElement('div');
-    div.innerText = `Price: ${products[id].price}`;
-    item.append(div);
-
-    div = document.createElement('div');
-    div.innerText = `Quantity: ${products[id].quantity}`;
-    item.append(div);
+    div.classList.add('block');
+    div.setAttribute(`data-order-id`, order[1].id);
+    div.innerHTML = `<div>${order[0].date}</div><div>${order[1].name}</div>`;
+    parent.append(div);
 
     let button = document.createElement('button');
-    button.innerText = 'Buy';
-    button.setAttribute(`data-product-name`, products[id].name);
-    item.append(button);
-    button.addEventListener('click', buyProduct);
+    button.innerText ='Remove';
+
+    div = document.createElement('div');
+    div.classList.add('button');
+    div.setAttribute(`data-remove-order-id`, order[1].id);
+
+    div.append(button);
+    parent.append(div);
+    
+    return parent;
 }
 
+function createOrdersList() {
+    const main = document.querySelector('main');
+
+    const ordersList = document.createElement('div');
+    ordersList.classList.add('orders-list');
+    main.append(ordersList);
+
+    const orders = getDataFromLocal('orders');
+
+    for (let i = 0; i < orders.length; i++) {
+        ordersList.append(createOrdersListItem(orders[i]));
+    }
+
+    ordersList.addEventListener('click', orderListener);
+    ordersList.addEventListener('click', removeOrderListener);
+}
+
+function updateOrdersList() {
+    const ordersList = document.querySelector('.orders-list');
+
+    ordersList.innerHTML = '';
 
 
+    const orders = getDataFromLocal('orders');
+
+    for (let i = 0; i < orders.length; i++) {
+        ordersList.append(createOrdersListItem(orders[i]));
+    }
+}
+
+function ordersListListener(event) {
+    clearAll();
+    createOrdersList();
+}
 
 const categories = ['Mobile phones', 'TV', 'Laptops'];
-const ul = document.querySelector('ul');
 
+const ul = document.querySelector('ul');
 for (let i = 0; i < categories.length; i++) {
     ul.append(createLi(categories[i], 'category', i));
 }
+ul.addEventListener('click', categoryListener);
 
-ul.addEventListener('click', function (event) {
-    const li = event.target.closest('li');
-    if (!li) return;
-    if (!ul.contains(li)) return;
-
-    const id = li.dataset.categoryId;
-    const own = products.filter(function (item) {
-        return item.category === categories[id];
-    });
-
-    const list = document.querySelector('.products-list');
-    list.innerHTML = '';
-    const productUl = document.createElement('ul');
-
-    for (let i = 0; i < own.length; i++) {
-        productUl.append(createLi(own[i].name, 'product', own[i].id))
-    }
-    list.append(productUl);
-    productUl.addEventListener('click', productListener);
-})
+const myOrders = document.querySelector('#my-orders');
+myOrders.addEventListener('click', ordersListListener);
