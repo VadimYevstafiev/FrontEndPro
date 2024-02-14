@@ -3,58 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="./app.css" rel="stylesheet" />
     <title>Document</title>
-    <style>
-        body {
-            display: grid;
-            grid-template-columns: 30vw 70vw;
-            grid-template-rows: 1fr;
-            margin: 0px;
-        }
 
-        aside {
-            display: grid;
-        }
-
-        main {
-            display: grid;
-            grid-template-columns: 30vw 1fr;
-        }
-
-        .products-list {
-            border: 1px solid black;
-            margin: 10px;
-            padding: 10px;
-        }
-
-        .product-item {
-            border: 1px solid black;
-            margin: 10px;
-            padding: 10px;
-        }
-
-        .orders-list {
-            display: grid;
-            border: 1px solid black;
-            margin: 10px;
-            padding: 10px;
-        }
-
-        nav {
-            border: 1px solid black;
-            margin: 10px;
-            padding: 10px;
-        }
-
-        .block {
-            display: inline-block;
-        }
-
-        .button {
-            display: inline-block;
-            float: right;
-        }
-    </style>
 </head>
 <body>
     <aside>
@@ -65,8 +16,73 @@
         </nav>
     </aside>
     <main>
-
+        <div class="confirm__bg"> 
+            <form class="confirm">
+                <label>
+                    <div>
+                        First Name
+                    </div>
+                    <input type="text" name="firstName">
+                    <div class="errorMessage" id="firstName"></div>
+                </label>
+                <label>
+                    <div>
+                        Last Name
+                    </div>
+                    <input type="text" name="lastName">
+                    <div class="errorMessage" id="lastName"></div>
+                </label>
+                <label>
+                    <div>
+                        City
+                    </div>
+                    <select name="city">
+                        <option value="London">London</option>
+                        <option value="Paris">Paris</option>
+                        <option value="Berlin">Berlin</option>
+                      </select>
+                      <div class="errorMessage" id="city"></div>
+                </label>            
+                <label>
+                    <div>
+                        NewPost Storage
+                    </div>
+                    <input type="number" name="newPost">
+                    <div class="errorMessage" id="newPost"></div>
+                </label>
+                <label>
+                    <div>
+                        Kind of Payment
+                    </div>
+                    <div>
+                        <input type="radio" class="radio" name="payment" value="pre"/>
+                        <label class="radioLabel" for="pre">Pre-Payment</label>
+                      </div>
+                    
+                      <div>
+                        <input type="radio" class="radio" name="payment" value="post" />
+                        <label class="radioLabel" for="post">Post-Payment</label>
+                      </div>
+                      <div class="errorMessage" id="payment"></div>
+                </label>
+                <label>
+                    <div>
+                        Quantity
+                    </div>
+                    <input type="number" name="quantity">
+                    <div class="errorMessage" id="quantity"></div>
+                </label>
+                <label>
+                    <div>
+                        Comment
+                    </div>
+                    <textarea name="comment"></textarea>
+                    <div class="errorMessage" id="comment"></div>
+                </label>
+                <button name="button" type="submit">Confirm</button>
+            </form>
+        </div>  
     </main>
-    <script src="./app.js"></script>
+    <script type="module" src="./app.js"></script>
 </body>
 </html>
