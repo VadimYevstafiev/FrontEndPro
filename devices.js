@@ -24,8 +24,20 @@ export function devicesListener(event) {
 
     const device = input.dataset.device;
     devices[device] = status;
-    console.log(devices);
-    //location.href = 'http://127.0.0.1:5500/index.html?devices=iphone,samsung';
+
+    const forSearch = [];
+    for (const key in devices) {
+        if (Object.hasOwnProperty.call(devices, key)) {
+            if (devices[key]) forSearch.push(key);
+        }
+    }
+    if (forSearch.length > 0) {
+        const searchString = forSearch.toString();
+        location.href = `http://127.0.0.1:5500/index.html?devices=${searchString}`;
+    } else {
+        location.href = `http://127.0.0.1:5500/index.html`;       
+    }
+
 }
 
 export function checkLi(devices, element) {
