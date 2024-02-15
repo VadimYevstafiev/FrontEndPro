@@ -20,48 +20,59 @@ function isNumber(input) {
     return !isNaN(parseFloat(input)) && isFinite(input);
 }
 
+function showConfirmedData() {
+    console.log(buyData);
+    const main = document.querySelector('main');
+    const item = document.createElement('div');
+    main.append(item);
+    let paragraph;
+    for (const key in buyData) {
+        if (Object.hasOwnProperty.call(buyData, key)) {
+            paragraph = document.createElement('p');
+            paragraph.innerText = `${key}: ${buyData[key]}`;
+            item.append(paragraph);
+            buyData[key] = null;
+        }
+    }
+
+}
+
 function confirmButtonListener(event) {
     event.preventDefault();
-    const button = event.target.closest('button');
+    const parent = event.target.parentNode;
 
-    if(!button) return;
-
-    if (!this.contains(button)) return;
+    let flag = true;
 
     let errorMessage;
     for (const key in buyData) {
         if (Object.hasOwnProperty.call(buyData, key) && key !== 'comment') {
             if (buyData[key] === null) {
-                console.log(this.querySelector(`#${key}`))
                 errorMessage = `The ${key} is requered`;
                 if (key === 'payment') {
-                    console.log(document.querySelectorAll('.radioLabel'))
-                    // for (const item of document.querySelectorAll('.radioLabel')) {
-                    //     item.classList.add('error');
-                    //   }
+                    for (const item of parent.querySelectorAll('.radioLabel')) {
+                        item.classList.add('error');
+                    }
                 } else {
-                    this[key].classList.add('error');
+                    parent[key].classList.add('error');
                 }
-                this.querySelector(`#${key}`).innerText = errorMessage;
+                parent.querySelector(`#${key}`).innerText = errorMessage;
+                flag = false;
             } else {
                 if (key === 'payment') {
-                    for (const item of this[key]) {
+                    for (const item of parent.querySelectorAll('.radioLabel')) {
                         item.classList.remove('error');
-                      }
+                    }
                 } else {
-                    this[key].classList.remove('error');
+                    parent[key].classList.remove('error');
                 }
-                this.querySelector(`#${key}`).innerText = '';
+                parent.querySelector(`#${key}`).innerText = '';
             }
         }
     }
-
-
-    console.log(buyData);
-}
-
-function radioListener(event) {
-    console.log('OK!!!!!!!!!!')
+    if (flag) {
+        confirmFormHide();
+        showConfirmedData();
+    }
 }
 
 function confirmFormListener(event) {
@@ -70,14 +81,24 @@ function confirmFormListener(event) {
     let isCorrect;
     let errorMessage;
 
-    console.log(event);
-    console.log(value)
+    if (name === 'city') {
+        buyData[name] = value;
+        event.target.classList.remove('error');
+        this.querySelector(`#${name}`).innerText = '';   
+        return;
+    }
+    if (name === 'payment') {
+        buyData[name] = value;
+        this.querySelector(`#${name}`).innerText = '';   
+        for (const item of this.querySelectorAll('.radioLabel')) {
+            item.classList.remove('error');
+        }
+        return;
+    }
 
     if (name === 'newPost' || name === 'quantity') {
         isCorrect = isNumber(value);
         errorMessage = `The ${name} may be number`;
-    } else if (name === 'city' || name === 'payment') {
-        isCorrect = true;
     } else if (name === 'comment') {
         isCorrect = isComment(value);
         errorMessage = `The ${name} may be text`;
@@ -98,18 +119,20 @@ function confirmFormListener(event) {
 
 export function confirmFormShow() {
     document.querySelector('.confirm__bg').hidden = false;
-    const confirmForm = document.querySelector('.confirm');
-    confirmForm.addEventListener('input', confirmFormListener);
-    confirmForm.addEventListener('click', confirmButtonListener);
-    confirmForm.querySelectorAll('.radio').forEach(element => {
-        element.addEventListener('click', radioListener);
-    })
-    console.log(confirmForm.querySelectorAll('.radio'))
+
+    const form = document.querySelector('.confirm');
+    form.addEventListener('input', confirmFormListener);
+
+    const button = form.querySelector('button');
+    button.addEventListener('click', confirmButtonListener);
 }
 
 export function confirmFormHide() {
     document.querySelector('.confirm__bg').hidden = true;
-    const confirmForm = document.querySelector('.confirm');
-    confirmForm.removeEventListener('input', confirmFormListener);
-    confirmForm.removeEventListener('click', confirmButtonListener);
+
+    const form = document.querySelector('.confirm');
+    form.removeEventListener('input', confirmFormListener);
+
+    const button = form.querySelector('button');
+    button.removeEventListener('click', confirmButtonListener);
 }

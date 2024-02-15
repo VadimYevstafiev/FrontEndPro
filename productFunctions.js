@@ -95,22 +95,23 @@ export function buyProduct(event) {
 
     const isHasLocalOrders = localStorage.getItem('orders');
 
-    // if (isHasLocalOrders) {
-    //     let orders = getDataFromLocal('orders');
-    //     orders.push(product);
-    //     setDataToLocal('orders', orders);
-    // } else {
-    //     setDataToLocal('orders', [product]);
-    // }
+    if (isHasLocalOrders) {
+        let orders = getDataFromLocal('orders');
+        orders.push(product);
+        setDataToLocal('orders', orders);
+    } else {
+        setDataToLocal('orders', [product]);
+    }
 
-    confirmFormShow();
-    // let div = document.createElement('div');
-    // div.innerText = `You buy ${product[1].name}`;
-    // div.classList.add('product-item');
-    // document.body.append(div);
-    // setTimeout(function () {
-    //     div.remove();
-    //     clearProductItem();
-    //     clearProductsList()
-    // }, 2000)
+    let div = document.createElement('div');
+    div.innerText = `You buy ${product[1].name}`;
+    div.classList.add('product-item');
+    document.body.append(div);
+    setTimeout(function () {
+        div.remove();
+        clearProductItem();
+        clearProductsList();
+        confirmFormShow();
+    }, 2000);
+
 }
