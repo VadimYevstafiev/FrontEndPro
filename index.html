@@ -4,10 +4,45 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <style>
+        #container {
+            display: grid;
+            grid-template-columns: 10vw 80vw 10vw;
+            grid-template-rows: 1fr;
+            margin: 0px;
+        }
+
+        div {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        button {
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+
+        }
+
+        img {
+            display: block;
+            margin-left: auto;
+            margin-right: auto
+        }
+    </style>
 </head>
 <body>
-    <div id="btn">Get random image</div> 
-    <div id="image"></div>
+    <div id="container">
+        <div>
+            <button id="prev">Prev</button>
+        </div>
+        <div id="image"></div>
+        <div>
+            <button id="next">Next</button>
+        </div>
+    </div>
+
     <script src="./app.js">
 
     </script>
