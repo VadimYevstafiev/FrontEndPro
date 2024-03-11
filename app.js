@@ -1,51 +1,21 @@
-const min = 1;
-const max = 9;
+const button = document.querySelector('#go');
 
-function renderImage(box, number) {
-	box.innerHTML = '';
-	box.setAttribute(`data-number`, number);
-	const image = document.createElement('img');
-	image.src = `./images/${number}.jpg`;
-	box.append(image);
-}
-
-const container = document.querySelector("#container");
-container.addEventListener('click', function (event) {
-	const box = this.querySelector('#image');
-	let number = box.dataset.number;
-
-	const button = event.target.closest('button');
-
-	if (!button) return;
-
-    if (!container.contains(button)) return;
-
-	switch (button.id) {
-		case 'prev':
-			number--;
-			break;	
-		case 'next':
-			number++;
+button.addEventListener('click', function name(params) {
+	let url = document.querySelector('#url').value;
+	
+	switch (true) {
+		case /^https.+/.test(url):
+			document.location.href = url;
 			break;
-	}
-
-	renderImage(box, number);
-
-	switch (number) {
-		case min:
-			this.querySelector("#prev").style.display = "none";
+		case /^http[^s].+/.test(url):
+			document.location.href = url.replace('http', 'https');
 			break;
-		case max:
-			this.querySelector("#next").style.display = "none";
+		case /^www.+/.test(url):
+			document.location.href = `https://${url}`;
 			break;
 		default:
-			this.querySelector("#prev").style.display = "block";
-			this.querySelector("#next").style.display = "block";
+			alert('Invalid url');
 			break;
 	}
-});
-
-
-document.querySelector("#prev").style.display = "none";
-renderImage(document.querySelector('#image'), 1);
+})
 
